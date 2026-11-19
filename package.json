@@ -6,7 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:up": "docker compose up -d db db_test",
+    "db:migrate": "prisma migrate dev",
+    "db:test:migrate": "dotenv -e .env.test -- prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "typecheck": "tsc --noEmit"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -37,7 +45,7 @@
     "eslint-config-next": "15.5.29",
     "jest": "^29.7.0",
     "jest-openapi": "^0.14.1",
-    "prisma": "^7.10.1",
+    "prisma": "^6.19.3",
     "supertest": "^7.3.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.23.15",
