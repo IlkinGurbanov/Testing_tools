@@ -11,7 +11,9 @@
     "db:migrate": "prisma migrate dev",
     "db:test:migrate": "dotenv -e .env.test -- prisma migrate deploy",
     "db:seed": "prisma db seed",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:unit": "jest -c jest.unit.config.ts",
+    "test:unit:watch": "jest -c jest.unit.config.ts --watch"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
