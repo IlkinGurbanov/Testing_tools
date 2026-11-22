@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`errorResponse UNIT-12: ZodError returns 400 with field details 1`] = `
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": [
+      {
+        "message": "Too small: expected string to have >=3 characters",
+        "path": "name",
+      },
+    ],
+    "message": "Invalid request",
+  },
+}
+`;
