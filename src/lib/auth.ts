@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { env } from './env';
-import { UnauthorizedError } from './error';
+import { UnauthorizedError } from './errors';
 import type { Role } from './types';
 
 export type TokenPayload = { sub: string; role: Role };

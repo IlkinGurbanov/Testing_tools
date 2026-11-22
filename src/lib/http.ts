@@ -1,7 +1,7 @@
 // src/lib/http.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
-import { AppError, ForbiddenError, UnauthorizedError, ValidationError } from './error';
+import { AppError, ForbiddenError, UnauthorizedError, ValidationError } from './errors';
 import { verifyToken } from './auth';
 import type { AuthUser, Role } from './types';
 

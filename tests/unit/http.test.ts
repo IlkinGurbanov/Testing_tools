@@ -3,7 +3,7 @@
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { errorResponse, getAuthUser, requireRole } from '@/lib/http';
-import { ConflictError, ForbiddenError, UnauthorizedError } from '@/lib/error';
+import { ConflictError, ForbiddenError, UnauthorizedError } from '@/lib/errors';
 import { signToken } from '@/lib/auth';
 
 describe('errorResponse', () => {

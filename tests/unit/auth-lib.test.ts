@@ -1,6 +1,6 @@
 // tests/unit/auth-lib.test.ts
 import { hashPassword, verifyPassword, signToken, verifyToken } from '@/lib/auth';
-import { UnauthorizedError } from '@/lib/error';
+import { UnauthorizedError } from '@/lib/errors';
 
 describe('parola', () => {
   test('UNIT-08: A hash is not a plain-text password, and it is verified.', async () => {
