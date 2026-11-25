@@ -32,17 +32,22 @@ export async function getOwnedTask(user: AuthUser, taskId: string) {
   return task;
 }
 
+// src/server/services/task.service.ts içindeki create fonksiyonunu değiştirin
 export async function create(user: AuthUser, projectId: string, input: CreateInput) {
   await projectService.getOwned(user, projectId);
-
-  const count = await prisma.task.count({ where: { projectId } });
-  if (count >= MAX_TASKS_PER_PROJECT) {
-    throw new UnprocessableError(`A project can have a maximum of ${MAX_TASKS_PER_PROJECT} tasks`);
-  }
-
   await assertAssigneeExists(input.assigneeId);
-  return prisma.task.create({
-    data: { title: input.title, dueDate: input.dueDate, assigneeId: input.assigneeId, projectId },
+
+  return prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "Project" WHERE id = ${projectId} FOR UPDATE`;
+
+    const count = await tx.task.count({ where: { projectId } });
+    if (count >= MAX_TASKS_PER_PROJECT) {
+      throw new UnprocessableError(`Bir projede en fazla ${MAX_TASKS_PER_PROJECT} görev olabilir`);
+    }
+
+    return tx.task.create({
+      data: { title: input.title, dueDate: input.dueDate, assigneeId: input.assigneeId, projectId },
+    });
   });
 }
 

@@ -13,7 +13,9 @@
     "db:seed": "prisma db seed",
     "typecheck": "tsc --noEmit",
     "test:unit": "jest -c jest.unit.config.ts",
-    "test:unit:watch": "jest -c jest.unit.config.ts --watch"
+    "test:unit:watch": "jest -c jest.unit.config.ts --watch",
+    "test:int": "jest -c jest.int.config.ts --runInBand",
+    "test:contract": "jest -c jest.int.config.ts --runInBand tests/contract"  
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

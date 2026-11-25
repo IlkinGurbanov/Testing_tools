@@ -1,5 +1,4 @@
-
- // tests/unit/http.test.ts
+// tests/unit/http.test.ts
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { errorResponse, getAuthUser, requireRole } from '@/lib/http';
@@ -29,13 +28,23 @@ describe('errorResponse', () => {
   test('UNIT-13: unknown error returns 500 without leaking internal message', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    const res = errorResponse(new Error('db password: 1234'));
-    const body = await res.json();
+    try {
+      const error = new Error('db password: 1234');
+      const res = errorResponse(error);
+      const body = await res.json();
 
-    expect(res.status).toBe(500);
-    expect(JSON.stringify(body)).not.toContain('1234');
-    expect(spy).toHaveBeenCalled();
-    spy.mockRestore();
+      expect(res.status).toBe(500);
+      expect(body).toEqual({
+        error: {
+          code: 'INTERNAL',
+          message: 'An unexpected error occurred',
+        },
+      });
+      expect(JSON.stringify(body)).not.toContain('1234');
+      expect(spy).toHaveBeenCalledWith(error);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 

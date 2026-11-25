@@ -1,11 +1,15 @@
 // tests/unit/task.service.test.ts
-jest.mock('@/lib/prisma', () => ({
-  prisma: {
+// tests/unit/task.service.test.ts (en üstteki jest.mock bloğu)
+jest.mock('@/lib/prisma', () => {
+  const prisma: Record<string, unknown> = {
     project: { findUnique: jest.fn() },
     task: { count: jest.fn(), create: jest.fn() },
     user: { findUnique: jest.fn() },
-  },
-}));
+    $queryRaw: jest.fn(),
+  };
+  prisma.$transaction = jest.fn((fn: (tx: unknown) => unknown) => fn(prisma));
+  return { prisma };
+});
 
 import { prisma } from '@/lib/prisma';
 import { UnprocessableError, NotFoundError } from '@/lib/errors';
